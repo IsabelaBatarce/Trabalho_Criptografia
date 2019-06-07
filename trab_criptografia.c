@@ -4,14 +4,15 @@
 
 int main(){
 
-	int escolha_menu, i=10,x=0,l=0,k=0,t=0,m=0,f=0, identificacao_agente, contagem=0, y, p;
-	char nome_agente[100],departamento[60],mensagem_sem_criptografia[40],mensagem_criptografada[40], mensagem_descriptografada[40];
+	int escolha_menu, i=10,x=0,l=0,k=0,t=0,m=0,f=0,w,z, identificacao_agente, contagem=0, y, p, cont=0;
+	char nome_agente[100],departamento[60],mensagem_sem_criptografia[40],mensagem_criptografada[40], mensagem_descriptografada[40], padrao[40];
 	char alfabeto[]="abcdefghijklmnopqrstuvwxyz";
 	char alfabeto_2[]="vwxyz";
 	char alfabeto_3[]="abcde";
 	char alfabetoMaiusculo[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	char alfabetoMaiusculo_2[]="VWXYZ";
 	char  alfabetoMaiusculo_3[]="ABCDE";
+
 	typedef struct criptografar_mensagem{
 		char nome_agente[100];
 		char departamento[60];
@@ -57,10 +58,11 @@ int main(){
 					break;
 				}
 				x=0;
-
+				k=0;
 				/*Criptografando a mensagem*/
 				while(x<contagem){				
-					if(((mensagem_sem_criptografia[x]<86) && (mensagem_sem_criptografia[x]>90)) ||(mensagem_sem_criptografia[x]<=117)){
+					if((mensagem_sem_criptografia[x]<86) && (mensagem_sem_criptografia[x]>96)&&(mensagem_sem_criptografia[x]<118)){
+						printf("entrounoif\n");						
 						l = mensagem_sem_criptografia[x];
 						y = l;
 						if (mensagem_sem_criptografia[x] != 32)
@@ -72,7 +74,7 @@ int main(){
 						x++;
 					}else{
 						while(k<5){
-							//printf("Enrou no while\n");
+								printf("Enrou no while K: %d\n",k);
 							if(alfabeto_2[k] == mensagem_sem_criptografia[x]){
 								if (mensagem_sem_criptografia[x] != 32)
 								{
@@ -100,9 +102,9 @@ int main(){
 								}							
 							}
 						}
+						//printf("Saiu do while\n");
 						if(k==4){
-							k=0;
-							l++;
+							break;
 						}	
 					}
 				}
@@ -118,7 +120,106 @@ int main(){
 			}else{
 				if(i==2){
 					printf("Digite o padrao a ser encontrado:\n");
-					fgets(padrao,40,stdin);
+					fgets(mensagem_sem_criptografia,40,stdin);
+					x=0;
+					k=0;
+					contagem = strlen(mensagem_sem_criptografia);
+					printf("Mensagem sem criptografia %s\n",mensagem_sem_criptografia);
+					
+				/*Criptografando a mensagem*/
+						while(x<contagem){	
+							//printf("Entrou no while\n");			
+							if(((mensagem_sem_criptografia[x]<86) && (mensagem_sem_criptografia[x]>90)) ||(mensagem_sem_criptografia[x]<=117)){
+								l = mensagem_sem_criptografia[x];
+								y = l;
+								if (mensagem_sem_criptografia[x] != 32)
+		 						{
+									 y = l+5;
+								}
+								padrao[x] = y;
+								//printf("alfabeto+5: %d, L: %d x: %d posicaoy:%d\n", y,l,x,alfabeto[y]);
+								x++;
+							}else{
+								while(k<5){
+									//printf("Enrou no while\n");
+									if(alfabeto_2[k] == mensagem_sem_criptografia[x]){
+										if (mensagem_sem_criptografia[x] != 32)
+										{
+											padrao[x] = alfabeto[k];
+										}
+										else
+										{
+										  padrao[x] = 32;	
+										}
+										x++;
+										l=0;
+										break;
+									}else{
+										if(alfabetoMaiusculo_2[k] == mensagem_sem_criptografia[x]){
+											if (mensagem_sem_criptografia[x] != 32){
+												padrao[x] = alfabetoMaiusculo[k];
+											}else{
+										  		padrao[x] = 32;	
+											}
+											x++;
+											l=0;
+											break;
+										}else{
+											k++;	
+										}							
+									}
+								}
+								if(k==4){
+									k=0;
+									l++;
+								}	
+							}
+						}
+						/*Fim criptografia*/
+						
+						padrao[x-1] = '\n';
+						y=0;
+
+					for(z=0;z<1000;z++){
+						//printf("Entrou no for %s\n O valor de z:%d\n", mensagens[z].mensagem_criptografada,z);
+						//printf("%s\n", mensagens[w-1].mensagem_criptografada);
+						contagem = strlen(padrao);
+
+						w=0;
+						k=0;
+						cont=0;
+						while(w<contagem && y<contagem){
+							if(padrao[w] == mensagens[z].mensagem_criptografada[k]){
+								cont++;
+								w++;
+								k++;
+							}else{
+								k++;
+								
+							}						
+						}
+						if(cont==contagem){
+							//printf("entrou no if\n");
+							//printf("Mensagem:%s\n",mensagens[z].mensagem_criptografada);
+							//printf("padrao:%s\n",padrao);
+							//printf("um teste dessa merda\n");
+							if(strcmp(padrao,mensagens[z].mensagem_criptografada) == 0){		
+								y++;
+							}
+						}
+						
+						
+					}
+					//printf("Saiu do for\n");
+					//printf("%s\n",mensagens[0].mensagem_criptografada);
+					printf("Padrao:%s\nMensagem:%s\nCont:%d\nY:%d\ncontagem:%d\n",padrao,mensagens[0].mensagem_criptografada,cont,y,contagem);
+					
+					if(y != 0){
+						printf("****Padrao encontrado em %d mensagens!****\n", y);
+					}else{
+						printf("****Padrao nao encontrado!****\n");
+					}
+					//printf("X: %d\n cont: %d\n w:%d\n", x,cont,w);
 				}else{
 					if(i==3){
 						fflush(stdin);
@@ -137,7 +238,7 @@ int main(){
 								while(x<contagem){
 									//printf("%d\n", contagem);
 									//printf("Entrou no while1\nx:%d\n",x);
-									if(mensagem_criptografada[x]>101 || (mensagem_criptografada[x]>69 && mensagem_criptografada[x]< 91)){
+									if((mensagem_criptografada[x]>101) || ((mensagem_criptografada[x]>69) && (mensagem_criptografada[x]< 91))){
 										//printf("Entrou no If2\n");
 										l=mensagem_criptografada[x];
 										y=l;
