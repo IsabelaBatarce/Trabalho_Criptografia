@@ -9,7 +9,9 @@ int main(){
 	char alfabeto[]="abcdefghijklmnopqrstuvwxyz";
 	char alfabeto_2[]="vwxyz";
 	char alfabeto_3[]="abcde";
-
+	char alfabetoMaiusculo[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char alfabetoMaiusculo_2[]="VWXYZ";
+	char  alfabetoMaiusculo_3[]="ABCDE";
 	typedef struct criptografar_mensagem{
 		char nome_agente[100];
 		char departamento[60];
@@ -71,7 +73,7 @@ int main(){
 					}else{
 						while(k<5){
 							//printf("Enrou no while\n");
-							if(alfabeto_2[k]== mensagem_sem_criptografia[x]){
+							if(alfabeto_2[k] == mensagem_sem_criptografia[x]){
 								if (mensagem_sem_criptografia[x] != 32)
 								{
 									mensagens[m].mensagem_criptografada[x] = alfabeto[k];
@@ -84,7 +86,18 @@ int main(){
 								l=0;
 								break;
 							}else{
-								k++;								
+								if(alfabetoMaiusculo_2[k] == mensagem_sem_criptografia[x]){
+									if (mensagem_sem_criptografia[x] != 32){
+										mensagens[m].mensagem_criptografada[x] = alfabetoMaiusculo[k];
+									}else{
+								  		mensagens[m].mensagem_criptografada[x] = 32;	
+									}
+									x++;
+									l=0;
+									break;
+								}else{
+									k++;	
+								}							
 							}
 						}
 						if(k==4){
@@ -104,7 +117,8 @@ int main(){
 									
 			}else{
 				if(i==2){
-					printf("Encontrar padrões\n");
+					printf("Digite o padrao a ser encontrado:\n");
+					fgets(padrao,40,stdin);
 				}else{
 					if(i==3){
 						fflush(stdin);
@@ -123,7 +137,7 @@ int main(){
 								while(x<contagem){
 									//printf("%d\n", contagem);
 									//printf("Entrou no while1\nx:%d\n",x);
-									if(mensagem_criptografada[x]>101){
+									if(mensagem_criptografada[x]>101 || (mensagem_criptografada[x]>69 && mensagem_criptografada[x]< 91)){
 										//printf("Entrou no If2\n");
 										l=mensagem_criptografada[x];
 										y=l;
@@ -140,8 +154,9 @@ int main(){
 										break;
 									}else{
 										while(k<5){
+											//printf("entrou no while\n");
 											if(alfabeto_3[k] == mensagem_criptografada[x]){
-												printf("Entrou no If3\n");
+												//printf("Entrou no errado\n");
 												if(mensagem_criptografada[x] != 32){
 													
 													mensagem_descriptografada[x] = alfabeto_3[k];
@@ -153,14 +168,29 @@ int main(){
 												k=0;
 												break;
 											}else{
-												k++;
+												if(alfabetoMaiusculo_3[k] == mensagem_criptografada[x]){
+													//printf("Entrou no if de maiúscula\n");
+													if(mensagem_criptografada[x] != 32){
+													
+														mensagem_descriptografada[x] = alfabetoMaiusculo_3[k];
+													}else{
+														
+														mensagem_descriptografada[x] = 32;
+													}
+													x++;
+													k=0;
+													break;
+												}else{
+													k++;
+												}
 											}
 										}
 										if(k==4){
-											k =0;
+											k=0;
 										}
 									}
 									if(x == (contagem-1)){
+										//printf("Chegou no break\n");
 										break;
 									}
 								}
