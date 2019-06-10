@@ -289,3 +289,59 @@ printf("Criptografou? %s\n", mensagens[0].mensagem_criptografada);
 								}	
 							}
 						}
+
+
+////
+
+
+
+
+y=0;		
+			printf("R:%d\n",r);
+			z=0;
+			h=0;
+			q=0;
+			x=0;
+			f=0;
+			b=0;
+			for(w=o;w<r;w++){
+				
+			}
+
+			for(w=0;w<r;w++){
+				contagem = strlen(mensagens[w].mensagem_criptografada);
+				printf("Contagem:%d\n", contagem);
+				while(b<(contagem-1)){
+					printf("Entrou no if\n");
+					j = mensagens[w].mensagem_criptografada[h]; 
+					printf("P:%d\N", j);
+					if( j =! 32){
+						printf("Entrou no if2\n");
+						while( j =! 32){
+							j = mensagens[t].mensagem_criptografada[x];
+							procurar[q].palavras_padrao[f] = mensagens[t].mensagem_criptografada[x];
+							x++;
+							f++;
+						}
+						
+						f=0;
+						printf("Palavra guardada: %s\n", procurar[q].palavras_padrao);
+						printf("Padrao: %s\n", padrao);
+						if(strcmp(procurar[q].palavras_padrao,padrao)==0){
+							y++;
+							break;
+						}	
+						q++;
+					}else{
+						h++;
+					}
+					b++;
+				}
+				
+			}
+					printf("B:%d\n",b);
+					
+					//printf("Saiu do for\n");
+					//printf("%s\n",mensagens[0].mensagem_criptografada);
+					printf("Y:%d\n",y);
+					
