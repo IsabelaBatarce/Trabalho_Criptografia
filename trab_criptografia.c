@@ -5,7 +5,7 @@
 int main(){
 
 	int escolha_menu, i=10,x=0,l=0,k=0,t=0,m=0,f=0,w,z,r=0, identificacao_agente, contagem=0, y, p, cont=0;
-	char nome_agente[100],departamento[60],mensagem_sem_criptografia[40],mensagem_criptografada[40], mensagem_descriptografada[40], padrao[40];
+	char nome_agente[100],departamento[60],mensagem_sem_criptografia[40],mensagem_criptografada[40], mensagem_descriptografada[40], padrao[40], teste[40];
 	char alfabeto[]="abcdefghijklmnopqrstuvwxyz";
 	char alfabeto_2[]="vwxyz";
 	char alfabeto_3[]="abcde";
@@ -55,155 +55,140 @@ int main(){
 					scanf("%d",&mensagens[t].identificacao_agente);
 					contagem = strlen(mensagem_sem_criptografia);
 					t++;
+					r++;
 					break;
 				}
-				x=0;
-				k=0;
-				r=0;
-				/*Criptografando a mensagem*/
-				while(x<contagem){
-					l = mensagem_sem_criptografia[x];
-					y = l;
-					if (mensagem_sem_criptografia[x] != 32){
-										
-						if(mensagem_sem_criptografia[x]<=85){
-							printf("ent rounoif\n");						
-							 y = l+5;
-						}else{
-					
-						if((mensagem_sem_criptografia[x]>85)&&(mensagem_sem_criptografia[x]<91)){
-								k=0;
-								while(k<5){
-									if(alfabetoMaiusculo_2[k] == mensagem_sem_criptografia[x]){
-										if (mensagem_sem_criptografia[x] != 32){
-											mensagens[m].mensagem_criptografada[x] = alfabetoMaiusculo[k];
-										}else{
-									  		mensagens[m].mensagem_criptografada[x] = 32;	
-										}
-										x++;
-										r=1;
-										break;
-									}else{
-										k++;	
-									}							
-								}	
-						
-						}else{
-							if((mensagem_sem_criptografia[x]>96) && (mensagem_sem_criptografia[x]<118)){
-								y = l+5;
-							}else{						
-						
-								if(mensagem_sem_criptografia[x]>117){
+		
 
-									while(k<5){
-											printf("Entrou no while K: %d\n",k);
-										if(alfabeto_2[k] == mensagem_sem_criptografia[x]){
-											if (mensagem_sem_criptografia[x] != 32)
-											{
-												printf("Entrou no if\n");
-												mensagens[m].mensagem_criptografada[x] = alfabeto[k];
-											}
-											else
-											{
-											  mensagens[m].mensagem_criptografada[x] = 32;	
-											}
-											x++;
-											r=1;
-											break;
-										}else{
-											k++;			
-										}
-									}
+				//printf("Mensagem:%d\n",mensagem_sem_criptografia[x]);
+				/*Criptografando a mensagem*/
+			x=0;
+			while(x<contagem){		
+				if(mensagem_sem_criptografia[x] != 32){
+					if((mensagem_sem_criptografia[x]>85) && (mensagem_sem_criptografia[x]<91)) {
+						//printf("Entrou certo\n");
+						k=86;
+						l=65;
+						while(k<91){
+							if(mensagem_sem_criptografia[x] == k){
+								y=l;
+								//printf("Y: %d == K: %d\n",y,k);
+								break;
+							}else{
+								k++;
+								l++;
 							}
 						}
-						
+					}else{
+					/*Fim caso 1*/
+						if((mensagem_sem_criptografia[x]>117) && (mensagem_sem_criptografia[x]<123)){
+							k=118;
+							l=97;
+							while(k<123){
+								if(mensagem_sem_criptografia[x]==k){
+									y=l;
+									break;
+								}else{
+									k++;
+									l++;
+								}
+							}
+						}else{
+					/*Fim caso 2*/
+							if((mensagem_sem_criptografia[x]>64) && (mensagem_sem_criptografia[x]<86)){
+								l = mensagem_sem_criptografia[x];
+								y = l;
+								y = l+5;
+								/*Fim caso 3*/
+							}else{
+								if((mensagem_sem_criptografia[x]>96) && (mensagem_sem_criptografia[x]<118)){
+									l = mensagem_sem_criptografia[x];
+									y = l;
+									y = l+5;
+								}
+							}
+						/*Fim caso 4*/
+						}
 					}
-				}
-					if(r==0){
-						mensagens[m].mensagem_criptografada[x] = y;
-						x++;
-					}
-			}else{
-				y = 32;
+				}else{
+					y = 32;
+				}	
 				mensagens[m].mensagem_criptografada[x] = y;
-				x++;
-				}
-				
-				
-				
-		}
-				mensagens[m].mensagem_criptografada[x-1] = '\n';
-				m++;
-				x=0;
+				x++;	
+			}
 
-				printf("Criptografou? %s %d\n", mensagens[m-1].mensagem_criptografada,m);
-				//printf("%d\n", teste);
-
-									
+			mensagens[m].mensagem_criptografada[x-1] = '\n';
+			printf("Criptografou? %s\n", mensagens[m].mensagem_criptografada);
+			m++;
+												
 			}else{
 				if(i==2){
 					printf("Digite o padrao a ser encontrado:\n");
 					fgets(mensagem_sem_criptografia,40,stdin);
 					x=0;
-					k=0;
 					contagem = strlen(mensagem_sem_criptografia);
 					printf("Mensagem sem criptografia %s\n",mensagem_sem_criptografia);
 					
 				/*Criptografando a mensagem*/
-						while(x<contagem){	
-							//printf("Entrou no while\n");			
-							if(((mensagem_sem_criptografia[x]<86) && (mensagem_sem_criptografia[x]>90)) ||(mensagem_sem_criptografia[x]<=117)){
-								l = mensagem_sem_criptografia[x];
-								y = l;
-								if (mensagem_sem_criptografia[x] != 32)
-		 						{
-									 y = l+5;
-								}
-								padrao[x] = y;
-								//printf("alfabeto+5: %d, L: %d x: %d posicaoy:%d\n", y,l,x,alfabeto[y]);
-								x++;
+				while(x<contagem){		
+				if(mensagem_sem_criptografia[x] != 32){
+					if((mensagem_sem_criptografia[x]>85) && (mensagem_sem_criptografia[x]<91)) {
+						//printf("Entrou certo\n");
+						k=86;
+						l=65;
+						while(k<91){
+							if(mensagem_sem_criptografia[x] == k){
+								y=l;
+								//printf("Y: %d == K: %d\n",y,k);
+								break;
 							}else{
-								while(k<5){
-									//printf("Enrou no while\n");
-									if(alfabeto_2[k] == mensagem_sem_criptografia[x]){
-										if (mensagem_sem_criptografia[x] != 32)
-										{
-											padrao[x] = alfabeto[k];
-										}
-										else
-										{
-										  padrao[x] = 32;	
-										}
-										x++;
-										l=0;
-										break;
-									}else{
-										if(alfabetoMaiusculo_2[k] == mensagem_sem_criptografia[x]){
-											if (mensagem_sem_criptografia[x] != 32){
-												padrao[x] = alfabetoMaiusculo[k];
-											}else{
-										  		padrao[x] = 32;	
-											}
-											x++;
-											l=0;
-											break;
-										}else{
-											k++;	
-										}							
-									}
-								}
-								if(k==4){
-									k=0;
-									l++;
-								}	
+								k++;
+								l++;
 							}
 						}
+					}else{
+					/*Fim caso 1*/
+						if((mensagem_sem_criptografia[x]>117) && (mensagem_sem_criptografia[x]<123)){
+							k=118;
+							l=97;
+							while(k<123){
+								if(mensagem_sem_criptografia[x]==k){
+									y=l;
+									break;
+								}else{
+									k++;
+									l++;
+								}
+							}
+						}else{
+					/*Fim caso 2*/
+							if((mensagem_sem_criptografia[x]>64) && (mensagem_sem_criptografia[x]<86)){
+								l = mensagem_sem_criptografia[x];
+								y = l;
+								y = l+5;
+								/*Fim caso 3*/
+							}else{
+								if((mensagem_sem_criptografia[x]>96) && (mensagem_sem_criptografia[x]<118)){
+									l = mensagem_sem_criptografia[x];
+									y = l;
+									y = l+5;
+								}
+							}
+						/*Fim caso 4*/
+						}
+					}
+				}else{
+					y = 32;
+				}	
+				padrao[x] = y;
+				x++;	
+			}	
 						/*Fim criptografia*/
 						
 						padrao[x-1] = '\n';
-						y=0;
+			y=0;		
 
-					for(z=0;z<1000;z++){
+					for(z=0;z<r;z++){
 						//printf("Entrou no for %s\n O valor de z:%d\n", mensagens[z].mensagem_criptografada,z);
 						//printf("%s\n", mensagens[w-1].mensagem_criptografada);
 						contagem = strlen(padrao);
@@ -213,9 +198,11 @@ int main(){
 						cont=0;
 						while(w<contagem && y<contagem){
 							if(padrao[w] == mensagens[z].mensagem_criptografada[k]){
+								teste[k]=padrao[w];							
 								cont++;
 								w++;
 								k++;
+								
 							}else{
 								k++;
 								
@@ -226,7 +213,7 @@ int main(){
 							//printf("Mensagem:%s\n",mensagens[z].mensagem_criptografada);
 							//printf("padrao:%s\n",padrao);
 							//printf("um teste dessa merda\n");
-							if(strcmp(padrao,mensagens[z].mensagem_criptografada) == 0){		
+							if(strcmp(padrao,teste) == 0){		
 								y++;
 							}
 						}
